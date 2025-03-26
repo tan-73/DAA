@@ -1,54 +1,39 @@
-import java.io.File;
-import java.io.IOException;
-import java.io.PrintWriter;
-import java.util.Random;
 import java.util.Scanner;
 
 public class LinearSearch {
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
 
-        System.out.println("Enter the number of elements to sort: ");
+        System.out.print("Enter the number of elements: ");
         int n = sc.nextInt();
-
+        
         int[] arr = new int[n];
 
-        // File file = new File("RandomNos.txt");
-        PrintWriter out = new PrintWriter(new File("RandomNos.txt"));
-        Random rand = new Random();
-
+        System.out.println("Enter " + n + " elements:");
         for (int i = 0; i < n; i++) {
-            arr[i] = rand.nextInt();
-            out.println(arr[i]);
+            arr[i] = sc.nextInt();
         }
-        out.close();
 
-        long startTime = System.nanoTime();
-        sort(arr);
-        long estimatedTime = System.nanoTime() - startTime;
+        System.out.print("Enter the element to search: ");
+        int key = sc.nextInt();
 
-        // File sortedFile = new File("SortedNos.txt");
-        PrintWriter outA = new PrintWriter(new File("SortedNos.txt"));
+        int result = linearSearch(arr, key);
 
-        for (int i = 0; i < n; i++) {
-            outA.println(arr[i]);
+        if (result == -1) {
+            System.out.println("Element not found.");
+        } else {
+            System.out.println("Element found at index: " + result);
         }
-        outA.close();
 
-        System.out.println("The estimated time to sort is: " + estimatedTime / 1_000_000_000.00 + " seconds");
         sc.close();
     }
 
-    public static void sort(int[] arr) {
-        for (int i = 1; i < arr.length; i++) {
-            int key = arr[i];
-            int j = i - 1;
-
-            while (j >= 0 && arr[j] > key) {
-                arr[j + 1] = arr[j];
-                j--;
+    public static int linearSearch(int[] arr, int key) {
+        for (int i = 0; i < arr.length; i++) {
+            if (arr[i] == key) {
+                return i; 
             }
-            arr[j + 1] = key;
         }
+        return -1; 
     }
 }
