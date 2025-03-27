@@ -1,55 +1,41 @@
 import java.util.Scanner;
 
-class MinMax {
-    static class Pair {
-        int min, max;
-    }
-
-    static Pair findMinMax(int arr[], int low, int high) {
-        Pair result = new Pair();
-
-        if (low == high) {
-            result.min = result.max = arr[low];
-            return result;
-        }
-
-        if (high == low + 1) {
-            if (arr[low] < arr[high]) {
-                result.min = arr[low];
-                result.max = arr[high];
-            } else {
-                result.min = arr[high];
-                result.max = arr[low];
-            }
-            return result;
-        }
-
-        int mid = (low + high) / 2;
-        Pair left = findMinMax(arr, low, mid);
-        Pair right = findMinMax(arr, mid + 1, high);
-
-        result.min = Math.min(left.min, right.min);
-        result.max = Math.max(left.max, right.max);
-
-        return result;
-    }
-
+public class MinMax {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
-        
-        System.out.print("Enter number of elements: ");
-        int n = sc.nextInt();
-        int arr[] = new int[n];
 
-        System.out.println("Enter elements:");
+        // Input: Number of elements
+        System.out.print("Enter the number of elements: ");
+        int n = sc.nextInt();
+        
+        int[] arr = new int[n];
+
+        System.out.println("Enter " + n + " elements:");
         for (int i = 0; i < n; i++) {
             arr[i] = sc.nextInt();
         }
 
-        Pair result = findMinMax(arr, 0, n - 1);
-        System.out.println("Minimum: " + result.min);
-        System.out.println("Maximum: " + result.max);
-        
+        int[] result = findMinMax(arr);
+
+        System.out.println("Minimum value: " + result[0]);
+        System.out.println("Maximum value: " + result[1]);
+
         sc.close();
+    }
+
+    public static int[] findMinMax(int[] arr) {
+        int min = arr[0]; 
+        int max = arr[0]; 
+
+        for (int i = 1; i < arr.length; i++) {
+            if (arr[i] < min) {
+                min = arr[i];
+            }
+            if (arr[i] > max) {
+                max = arr[i];
+            }
+        }
+
+        return new int[]{min, max}; // Return min and max as an array
     }
 }
