@@ -56,7 +56,7 @@ public class KnapsackReduced {
     static float knapsack(Item[] items, float capacity) {
         float maxProfit = 0;
         
-        for (Item item : items) {
+        for (Item item : items) {	
             if (capacity >= item.weight) { // Take full item
                 maxProfit += item.profit;
                 capacity -= item.weight;
