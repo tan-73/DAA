@@ -1,4 +1,8 @@
+import java.io.File;
+import java.io.PrintWriter;
+import java.util.Random;
 import java.util.Scanner;
+import java.io.*;
 
 public class BubbleSort {
     public static void sort(int[] arr) {
@@ -18,24 +22,36 @@ public class BubbleSort {
         arr[j] = temp;
     }
 
-    public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
-        System.out.print("Enter number of elements : ");
-        int n = sc.nextInt();
-        int arr[] = new int[n];
-        
-        System.out.print("Enter the elements : ");
-        for (int i = 0; i < arr.length; i++)
-            arr[i] = sc.nextInt();
-        
-        sort(arr);
+    public static void main(String[] args) throws IOException {
+    	Scanner sc = new Scanner (System.in);
 
-        System.out.println("The sorted array is : ");
-        for (int num : arr) {
-            System.out.print(num + " ");
-        }
-        System.out.println();
-        
-        sc.close();
+		System.out.print("Enter the number of elements to sort : ");
+		int n = sc.nextInt();
+		
+		int[] arr = new int[n];
+		
+		PrintWriter out = new PrintWriter(new File("RandomNos.txt"));
+		Random rand = new Random();
+		
+		for (int i = 0 ; i < n ; i++) { 
+			arr[i] = rand.nextInt();
+			out.print(arr[i]);
+			out.print("\n");
+		}
+		out.close();
+		
+		long startTime = System.nanoTime();
+		sort(arr);
+		long estimatedTime = System.nanoTime() - startTime;
+		
+		PrintWriter outA = new PrintWriter(new File("SortedNos.txt"));
+		
+		for (int i = 0 ; i < n ; i++) {
+			outA.print(arr[i]);
+			outA.print("\n");
+		}
+		outA.close();
+		
+		System.out.println("The estimated time to sort is : "+estimatedTime/1000000000.00);
     }
 }

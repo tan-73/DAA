@@ -1,23 +1,41 @@
+import java.io.File;
+import java.io.PrintWriter;
+import java.util.Random;
 import java.util.Scanner;
+import java.io.*;
 
 public class MergeSort {
-	public static void main (String[] args) {
+	public static void main (String[] args) throws IOException {
 		Scanner sc = new Scanner (System.in);
 		
-		int n;
-		System.out.println("Enter the number of elements : ");
-		n = sc.nextInt();
-		int[] arr = new int [n];
-		System.out.println("Enter the elements : ");
+		System.out.print("Enter the number of elements to sort : ");
+		int n = sc.nextInt();
 		
-		for (int i = 0 ; i < arr.length ; i++)
-			arr[i] = sc.nextInt();
+		int[] arr = new int[n];
 		
+		PrintWriter out = new PrintWriter(new File("RandomNos.txt"));
+		Random rand = new Random();
+		
+		for (int i = 0 ; i < n ; i++) { 
+			arr[i] = rand.nextInt();
+			out.print(arr[i]);
+			out.print("\n");
+		}
+		out.close();
+		
+		long startTime = System.nanoTime();
 		sort(arr, 0, arr.length-1);
+		long estimatedTime = System.nanoTime() - startTime;
 		
-		System.out.println("The sorted array is : ");
-		for (int i = 0 ; i < arr.length ; i++) 
-				System.out.print(arr[i]+" ");
+		PrintWriter outA = new PrintWriter(new File("SortedNos.txt"));
+		
+		for (int i = 0 ; i < n ; i++) {
+			outA.print(arr[i]);
+			outA.print("\n");
+		}
+		outA.close();
+		
+		System.out.println("The estimated time to sort is : "+estimatedTime/1000000000.00);
 	}
 	
 	public static void sort (int[] arr, int beg, int end) {
